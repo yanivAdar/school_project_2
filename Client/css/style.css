@@ -1,0 +1,111 @@
+#login{
+    width: 50%;
+    height: 100px;
+    /*position: center;*/
+
+}
+.myBtn{
+    width: 70px;
+    height: 35px;
+    /*background-color: teal;*/
+    /*background-color: linear-gradient(red, yellow, green);*/
+    background-color: #be9d34;
+    border: none;
+    color: white;
+    /*border-radius: 10px;*/
+}
+.user{
+    float: left;
+}
+/*.myPic{
+    float: left;
+    width: 35px;
+    height: 35px;
+    margin: 5px;
+}*/
+.menu{
+    float:left;
+    height: 50px;
+    width: 160px;
+    display: inline-block;
+    font-size: 20px;
+    margin-left: 50px;
+}
+.glyph{
+    margin-left: 30px;
+    cursor: pointer;
+}
+.info{
+    font-size: 13px;
+    margin-bottom: 0px;
+    width: 100px;
+}
+td{
+    padding: 5px;
+}
+
+.main{
+    width: 60%;
+    height: 500px;
+    background-color: floralwhite;
+    float: left;
+    margin-left: 40px;
+    position: relative;
+}
+.changeBtn{
+    float: right;
+    position: relative;
+    margin: 11px 20px;
+}
+#stdPic, .bigPic{
+    width: 150px;
+    height: 150px;
+    float: left;
+    margin: 0px 20px 20px 20px;
+    background-color: grey;
+    display: inline-block;
+    border: 1px solid black;
+}
+#stdInfo{
+    width: 70%;
+    height: 150px;
+    float: left;
+    margin: 0px 20px 20px 20px;
+    display: inline-block;
+
+}
+#stdCourses{
+    float: left;
+    width: 70%;
+    font-size: 20px;
+}
+#stdName{
+    font-size: 40px;
+}
+.stdDet{
+    font-size: 18px;
+}
+.proPic{
+    width: 45px;
+    height: 45px;
+    background-color: lightgray;
+}
+
+.strTR{
+    cursor: pointer;
+}
+.editTable{
+    margin: 20px;
+}
+#Picture{
+    margin-top: 7px;
+}
+.mySpan{
+    width: 120px;
+    float: left;
+    margin-top: 0px;
+    margin-bottom: 0px;   
+}
+#file{
+    margin-top: 16px;
+}

@@ -1,0 +1,8 @@
+db name: project-2-yaniv-db
+table admins: 
+create table users (
+        user_id INT AUTO_INCREMENT,
+        user_mail varchar(255),
+        user_pass varchar(255),
+        PRIMARY KEY(user_id)
+)

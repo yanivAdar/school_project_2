@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>main page</title>
+    <script src="js/jquery-3.2.1.js"></script>
+    <script src="js/scriptSession.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/scriptLogOut.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" href="css/style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="#"><img class="navbar-brand" alt="logo" src="project-pics/logo2.jpg"></a>
+                <a class="navbar-brand" href="#">Yaniv Adar's Project</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="#">School</a></li>
+                    <li id="adminBtn"><a href="#">Administraion</a></li>
+                </ul>
+                <ul class="navbar-right">
+                    <img src="project-pics/profile-pictures/profilePic.JPG" />
+                </ul>
+                <ul class="navbar-right">
+                    <div id="name"></div>
+                    <div id="role"></div>
+                </ul>
+                <ul class="navbar-right">
+                    <div id="logout"><a href="">log out</a></div>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="menu container-fluid">
+        <p>Courses<span class="glyphicon glyphicon-plus glyph"><span></p>
+        <table class="table" id="Ctable">
+            <!--<tr>
+                <td class="glyphicon glyphicon-unchecked"></td>
+                <td >
+                    <p class="info">name</p>
+                    <p class="info">phone</p>
+                </td>
+            </tr>
+                <td class="glyphicon glyphicon-unchecked">
+                </td>
+                <td>
+                    <p class="info">name</p>
+                    <p class="info">phone</p>
+                </td>
+            </tr>
+                <td class="glyphicon glyphicon-unchecked">
+                </td>
+                <td>
+                    <p class="info">name</p>
+                    <p class="info">phone</p>
+                </td>
+            </tr>   -->
+        </table>
+        </div>
+    <div class="menu container-fluid">
+        <p>Students<span id="stdAdd" class="glyphicon glyphicon-plus glyph"></span></p>
+        <table class="table" id="Stable">
+        </table>
+    </div>
+    <div class="main" id="mainSudentInfo">
+        <nav class="navbar navbar-default" id="myHeader">
+            <button class="changeBtn btn" id="editStd">Edit</button>
+            <button class="changeBtn btn" id="deleteStd">Delete</button>
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <span class="navbar-brand">Students</span>
+                </div>
+            </div>
+        </nav>
+        <div><img id="stdPic" /></div>
+        <div id="stdInfo">
+            <div id="stdName"></div>
+            <div id="stdPhone" class="stdDet">054-6565655</div>
+            <div id="stdEmail" class="stdDet">israel@israeli.us</div>
+        </div>
+        <div>
+            <ul id="stdCourses">
+            </ul>
+        </div>
+    </div>
+    <div class="main" id="mainSudentEdit">
+        <nav class="navbar navbar-default" id="myHeader">
+            <button class="changeBtn btn" id="updateStd">Update</button>
+            <button class="changeBtn btn" id="createStd">Create Student</button>
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <span class="navbar-brand">Add/edit Students</span>
+                </div>
+            </div>
+        </nav>
+
+        <table class="editTable">
+            <tr>
+                <td><label for="Name">Name</label></td>
+                <td><input type="text" id="Name" class="form-control clean" val="" /></td>
+                <td><label for="Picture">Picture</label></td>
+                <td rowspan="3" colspan="3"><img class="bigPic clean" id="Picture" /></td>
+            </tr>
+            <tr>
+                <td><label for="Phone">Phone</label></td>
+                <td><input type="text" id="Phone" class="form-control clean" val=""/></td>
+            </tr>
+            <tr>
+                <td><label for="Email">Email</label></td>
+                <td><input type="text" id="Email" class="form-control clean" val=""/></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><label for="file">Upload file</label></td>
+                <td><input id="file" type="file" name="myFile"/></br></td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+            </tr>
+        </table>
+        <table class="editTable">
+            <tr>
+                <td><label>Courses</label></td>
+                <td>
+                    <span class="mySpan checkbox">
+                    <label><input type="checkbox" value="Html">Html</label>
+                    </span>
+                </td>
+                <td>
+                    <span class="mySpan checkbox">
+                    <label><input type="checkbox" value="Css">Css</label>
+                    </span>
+                </td>
+                <td>
+                    <span class="mySpan checkbox">
+                    <label><input type="checkbox" value="OOP">OOP</label>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <span class="mySpan checkbox">
+                    <label><input type="checkbox" value="PHP">PHP</label>
+                    </span>
+                </td>
+                <td>
+                    <span class="mySpan checkbox">
+                    <label><input type="checkbox" value="C++">C++</label>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <span class="mySpan checkbox">
+                    <label><input type="checkbox" value="Python">Python</label>
+                    </span>
+                </td>
+                <td>
+                    <span class="mySpan checkbox">
+                    <label><input type="checkbox" value="Javascript">Javascript</label>
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+
+</html>
