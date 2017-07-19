@@ -14,6 +14,7 @@
 </head>
 
 <body>
+    <!-- ------------ page nav bar ---------------- -->
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -38,37 +39,41 @@
             </div>
         </div>
     </nav>
+    <!-- -------------- page data tables ---------------- -->
+    <!-- -------------- students data table -------------- -->
     <div class="menu container-fluid">
         <p>Courses<span class="glyphicon glyphicon-plus glyph"><span></p>
         <table class="table" id="Ctable">
-            <!--<tr>
-                <td class="glyphicon glyphicon-unchecked"></td>
-                <td >
-                    <p class="info">name</p>
-                    <p class="info">phone</p>
-                </td>
-            </tr>
-                <td class="glyphicon glyphicon-unchecked">
-                </td>
-                <td>
-                    <p class="info">name</p>
-                    <p class="info">phone</p>
-                </td>
-            </tr>
-                <td class="glyphicon glyphicon-unchecked">
-                </td>
-                <td>
-                    <p class="info">name</p>
-                    <p class="info">phone</p>
-                </td>
-            </tr>   -->
         </table>
         </div>
+    <!-- -------------- courses data table -------------- -->
     <div class="menu container-fluid">
         <p>Students<span id="stdAdd" class="glyphicon glyphicon-plus glyph"></span></p>
         <table class="table" id="Stable">
         </table>
     </div>
+    <!-- -------------- courses info div -------------- -->
+    <div class="main" id="mainCoursesInfo">
+        <nav class="navbar navbar-default" id="myHeader">
+            <button class="changeBtn btn" id="editCrs">Edit</button>
+            <button class="changeBtn btn" id="deleteCrs">Delete</button>
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <span class="navbar-brand">Courses</span>
+                </div>
+            </div>
+        </nav>
+        <div><img class="crsPic" /></div>
+        <div id="crsInfo">
+            <div id="crsName">Course Name</div>
+            <div id="crsDesc" >Description</div>
+        </div>
+        <div>
+            <ul id="stdEnrolled">
+            </ul>
+        </div>
+    </div>
+    <!-- -------------- students info div -------------- -->
     <div class="main" id="mainSudentInfo">
         <nav class="navbar navbar-default" id="myHeader">
             <button class="changeBtn btn" id="editStd">Edit</button>
@@ -79,7 +84,7 @@
                 </div>
             </div>
         </nav>
-        <div><img id="stdPic" /></div>
+        <div><img class="stdPic" /></div>
         <div id="stdInfo">
             <div id="stdName"></div>
             <div id="stdPhone" class="stdDet">054-6565655</div>
@@ -90,6 +95,36 @@
             </ul>
         </div>
     </div>
+    <!-- -------------- courses edit div -------------- -->
+    <div class="main" id="mainCourseEdit">
+        <nav class="navbar navbar-default" id="myHeader">
+            <button class="changeBtn btn" id="updateCrs">Update</button>
+            <button class="changeBtn btn" id="createCrs">Create Course</button>
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <span class="navbar-brand">Add/edit Courses</span>
+                </div>
+            </div>
+        </nav>
+        <table class="editTable">
+            <tr>
+                <td><label for="crsNameEdit">Name</label></td>
+                <td><input type="text" id="crsNameEdit" class="form-control clean" val="" /></td>
+                <td><label for="crsPicture">Picture</label></td>
+                <td rowspan="3" colspan="3"><img class="bigPic clean" id="crsPicture" /></td>
+            </tr>
+            <tr>
+                <td><label for="crsDescription">Course Description</label></td>
+                <td><textarea type="text" id="crsDescription" class="form-control clean" val=""></textarea></td>
+            </tr>
+            <tr>
+
+                <td><label for="file">Upload file</label></td>
+                <td><input id="file" type="file" name="myFile"/></br></td>
+            </tr>
+        </table>
+    </div>
+    <!-- -------------- students edit div -------------- -->
     <div class="main" id="mainSudentEdit">
         <nav class="navbar navbar-default" id="myHeader">
             <button class="changeBtn btn" id="updateStd">Update</button>
@@ -100,7 +135,6 @@
                 </div>
             </div>
         </nav>
-
         <table class="editTable">
             <tr>
                 <td><label for="Name">Name</label></td>

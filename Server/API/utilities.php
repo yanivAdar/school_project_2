@@ -50,6 +50,21 @@
         }
         return $stdData;
     }
+    function getCourses(){
+        $query = "SELECT * FROM courses";
+        $resQuery = mysqli_query($GLOBALS['connection'], $query);
+        $courses = mysqli_fetch_row($resQuery);
+        $crsData = [];
+        while($courses){
+            $singleCrs = [];
+            foreach ($courses as $key => $value) {
+                array_push($singleCrs,$value);
+            }
+            array_push($crsData,$courses);
+            $courses = mysqli_fetch_row($resQuery);
+        }
+        return $crsData;
+    }
     function updateStd($id,$name,$phone,$email,$picture,$courses){
         $query = "UPDATE students SET std_full_name='$name',std_phone='$phone',std_email='$email',std_picture='$picture',std_courses='$courses' WHERE std_email='$id'";
         $resQuery = mysqli_query($GLOBALS['connection'], $query);

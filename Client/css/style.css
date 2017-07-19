@@ -57,7 +57,7 @@ td{
     position: relative;
     margin: 11px 20px;
 }
-#stdPic, .bigPic{
+.stdPic, .bigPic, .crsPic{
     width: 150px;
     height: 150px;
     float: left;
@@ -79,11 +79,12 @@ td{
     width: 70%;
     font-size: 20px;
 }
-#stdName{
+#stdName, #crsName{
     font-size: 40px;
 }
-.stdDet{
+.stdDet, #crsDesc{
     font-size: 18px;
+    padding-right: 20px;
 }
 .proPic{
     width: 45px;
@@ -91,9 +92,13 @@ td{
     background-color: lightgray;
 }
 
-.strTR{
+.stdTR{
     cursor: pointer;
 }
+.crsTR{
+    cursor: pointer;
+}
+
 .editTable{
     margin: 20px;
 }
