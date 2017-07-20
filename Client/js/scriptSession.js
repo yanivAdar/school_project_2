@@ -65,6 +65,7 @@ $(document).ready(function () {
         $('#createStd').show();
         var checkboxVal = $('input:checkbox');
         $('#mainCoursesInfo').hide();
+        $('#mainCourseEdit').hide();
         $('#updateStd').hide();
         $('#mainSudentInfo').hide();
         $('#mainSudentEdit').effect('slide', 'fast');
@@ -73,6 +74,16 @@ $(document).ready(function () {
         for (let a of checkboxVal) {
             a['checked'] = false;
         }
+    });
+    $('#crsAdd').on('click', function () { // here-------------------------------------------------
+        $('#createCrs').show();
+        $('#mainSudentEdit').hide();
+        $('#mainSudentInfo').hide();
+        $('#mainCoursesInfo').hide();
+        $('#updateCrs').hide();
+        $('#mainCourseEdit').effect('slide', 'fast');
+        $('.clean').val('');
+        $('#Picture').attr('src', '');
     });
     $('#createStd').on('click', function () {
         var newStdUrl = '../Server/API/newStudent.php';
@@ -95,7 +106,6 @@ $(document).ready(function () {
         var picture = $('#Picture').attr('src');
         var courses = fillCourses();
         newStdDetails(updateUrl, id, name, phone, email, picture, courses);
-        updateStudentsCourses();
     });
     $('#deleteStd').click(function () {
         alert('you are about to delete this student');
@@ -108,6 +118,7 @@ $(document).ready(function () {
                 success: function (data) {
                     $('.remove').remove();
                     loadDataStd();
+                    loadDataCrs();
                 },
                 error: function (err) {
                     console.log(err.responseText);
@@ -147,7 +158,6 @@ $(document).ready(function () {
                     var studentCourses = (i[4]);
                     studentCrsArr.push(studentCourses);
                 }
-                updateStudentListInCourses();
             },
             error: function (err) {
                 console.log(err.responseText);
@@ -161,6 +171,7 @@ $(document).ready(function () {
             success: function (data) {
                 $('.remove').remove();
                 loadDataStd();
+                loadDataCrs();
                 setTimeout(function () {
                     var std = getStudentFromData(email);
                     currentStd(std);
@@ -176,6 +187,30 @@ $(document).ready(function () {
                 email: email,
                 picture: picture,
                 courses: courses
+            }
+        });
+    }
+    function newCrsDetails(url, name, Des, picture, students) {
+        $.ajax({
+            url: url,
+            type: 'POST',
+            success: function (data) {
+                $('.remove').remove();
+                loadDataCrs();
+                loadDataStd();
+                setTimeout(function () {
+                    var crs = getStudentFromData(id);
+                    currentCrs(crs);
+                }, 50);
+            },
+            error: function (err) {
+                console.log(err.responseText);
+            },
+            data: {
+                name: name,
+                des: des,
+                picture: picture,
+                students: students
             }
         });
     }
@@ -232,8 +267,8 @@ $(document).ready(function () {
         $('#crsDesc').html(object[2]);
         $('.crsPic').attr('src', (object[3]));
         $('.removeCrs').remove();
-        var stdCourseEnrolled = object[4].split(",");
-        for (let j of stdCourseEnrolled) {
+        var stdEnrolled = updateStudentListInCourses(object[1]);
+        for (let j of stdEnrolled) {
             for (let i of stdData) {
                 if (j == i[3]) {
                     $('#stdEnrolled').append('<tr class="removeCrs" id="' + i[3] + '"><td class="info"><img class="proPic" src="' + i[4] + '"/></td><td><p class="info">' + i[1] + '</p><p class="info">' + i[2] + '</p></td></tr>');
@@ -263,16 +298,6 @@ $(document).ready(function () {
         $('#crsNameEdit').val(object[1]);
         $('#crsDescription').val(object[2]);
         $('#crsPicture').attr('src', (object[3]));
-        //     var stdCourses = object[4].split(",");
-        //     for (let a of $('input:checkbox')) {
-        //         a['checked'] = false;
-        //     }
-        //     for (let i of $('input:checkbox'))
-        //         for (let j of stdCourses) {
-        //             if (i['value'] == j) {
-        //                 i['checked'] = 'true';
-        //             }
-        //         }
     }
     function fillCourses() {
         var coursesArr = [];
@@ -283,19 +308,17 @@ $(document).ready(function () {
         }
         return coursesArr.toString();
     }
-    function updateStudentListInCourses() {
-        // var Fd = new FormData();
-        var fd = new FormData;
-        for (let i of stdData) {
-            var crsArr = i[5].split(",");
-            for (let j of crsArr) {
-                if (j == crsData[1]) {
-                    fd.append(i[3],j);
+    function updateStudentListInCourses(crs) {
+        stdEnrolled = [];
+        for (let j of stdData) {
+            var crsArr = j[5].split(",");
+            for (let k of crsArr) {
+                if (crs == k) {
+                    stdEnrolled.push(j[3]);
                 }
             }
         }
-        console.log(fd); debugger
-        return fd;
+        return stdEnrolled;
     }
     function updateCoursesListInStudents() {
 
