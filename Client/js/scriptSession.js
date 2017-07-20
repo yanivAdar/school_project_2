@@ -203,7 +203,6 @@ $(document).ready(function () {
         $('.stdPic').attr('src', (object[4]));
         $('#stdCourses').html('');
         var stdCourses = object[5].split(",");
-        // console.log(stdCourses);
         for (let j of stdCourses) {
             $('#stdCourses').append('<li>' + j + '</li>');
         }
@@ -216,13 +215,15 @@ $(document).ready(function () {
         $('#crsName').html(object[1]);
         $('#crsDesc').html(object[2]);
         $('.crsPic').attr('src', (object[3]));
-        // $('#stdCourses').html('');
-        // var stdCourses = object[5].split(",");
-        // // console.log(stdCourses);
-        // for (let j of stdCourses) {
-        //     $('#stdCourses').append('<li>' + j + '</li>');
-        // }
-    }
+        $('.removeCrs').remove();
+        var stdCourseEnrolled = object[4].split(",");
+        for(let j of stdCourseEnrolled) {
+            for(let i of stdData){
+                if(j == i[3]){
+                     $('#stdEnrolled').append('<tr class="removeCrs" id="' + i[3] + '"><td class="info"><img class="proPic" src="' + i[4] + '"/></td><td><p class="info">' + i[1] + '</p><p class="info">' + i[2] + '</p></td></tr>');
+                }
+            }
+        }
     function getStudentInfoIntoForm(object) {
         $('#mainSudentEdit').effect('slide', 'fast');
         $('#Name').val(object[1]);
