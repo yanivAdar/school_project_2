@@ -95,6 +95,7 @@ $(document).ready(function () {
         var picture = $('#Picture').attr('src');
         var courses = fillCourses();
         newStdDetails(updateUrl, id, name, phone, email, picture, courses);
+        updateStudentsCourses();
     });
     $('#deleteStd').click(function () {
         alert('you are about to delete this student');
@@ -115,7 +116,7 @@ $(document).ready(function () {
                     id: id
                 }
             });
-         } 
+        }
     });
     function loadDataStd() {
         $.ajax({
@@ -125,7 +126,6 @@ $(document).ready(function () {
                 stdData = data;
                 for (let i of data) {
                     $('#Stable').append('<tr class="stdTR remove" id="' + i[3] + '"><td class="info"><img class="proPic" src="' + i[4] + '"/></td><td><p class="info">' + i[1] + '</p><p class="info">' + i[2] + '</p></td></tr>');
-                    // var courses = (i[6]).split(',');
                     var courses = (i[5]);
                     coursesArr.push(courses);
                 }
@@ -147,6 +147,7 @@ $(document).ready(function () {
                     var studentCourses = (i[4]);
                     studentCrsArr.push(studentCourses);
                 }
+                updateStudentListInCourses();
             },
             error: function (err) {
                 console.log(err.responseText);
@@ -178,6 +179,21 @@ $(document).ready(function () {
             }
         });
     }
+    // function updateStudentsCourses() {
+    //     $.ajax({
+    //         url: '../Server/API/coursesUpdate.php',
+    //         type: 'POST',
+    //         success: function (data) {
+
+    //         },
+    //         error: function (err) {
+    //             console.log(err.responseText);
+    //         },
+    //         data: {
+    //             stdArr = updateStudentListInCourses()
+    //         }
+    //     });
+    // }
     function getStudentFromData(id) {
         for (var i = 0; i < stdData.length; i++) {
             if (stdData[i][3] == id) {
@@ -217,13 +233,14 @@ $(document).ready(function () {
         $('.crsPic').attr('src', (object[3]));
         $('.removeCrs').remove();
         var stdCourseEnrolled = object[4].split(",");
-        for(let j of stdCourseEnrolled) {
-            for(let i of stdData){
-                if(j == i[3]){
-                     $('#stdEnrolled').append('<tr class="removeCrs" id="' + i[3] + '"><td class="info"><img class="proPic" src="' + i[4] + '"/></td><td><p class="info">' + i[1] + '</p><p class="info">' + i[2] + '</p></td></tr>');
+        for (let j of stdCourseEnrolled) {
+            for (let i of stdData) {
+                if (j == i[3]) {
+                    $('#stdEnrolled').append('<tr class="removeCrs" id="' + i[3] + '"><td class="info"><img class="proPic" src="' + i[4] + '"/></td><td><p class="info">' + i[1] + '</p><p class="info">' + i[2] + '</p></td></tr>');
                 }
             }
         }
+    }
     function getStudentInfoIntoForm(object) {
         $('#mainSudentEdit').effect('slide', 'fast');
         $('#Name').val(object[1]);
@@ -246,16 +263,16 @@ $(document).ready(function () {
         $('#crsNameEdit').val(object[1]);
         $('#crsDescription').val(object[2]);
         $('#crsPicture').attr('src', (object[3]));
-    //     var stdCourses = object[4].split(",");
-    //     for (let a of $('input:checkbox')) {
-    //         a['checked'] = false;
-    //     }
-    //     for (let i of $('input:checkbox'))
-    //         for (let j of stdCourses) {
-    //             if (i['value'] == j) {
-    //                 i['checked'] = 'true';
-    //             }
-    //         }
+        //     var stdCourses = object[4].split(",");
+        //     for (let a of $('input:checkbox')) {
+        //         a['checked'] = false;
+        //     }
+        //     for (let i of $('input:checkbox'))
+        //         for (let j of stdCourses) {
+        //             if (i['value'] == j) {
+        //                 i['checked'] = 'true';
+        //             }
+        //         }
     }
     function fillCourses() {
         var coursesArr = [];
@@ -265,5 +282,22 @@ $(document).ready(function () {
             }
         }
         return coursesArr.toString();
+    }
+    function updateStudentListInCourses() {
+        // var Fd = new FormData();
+        var fd = new FormData;
+        for (let i of stdData) {
+            var crsArr = i[5].split(",");
+            for (let j of crsArr) {
+                if (j == crsData[1]) {
+                    fd.append(i[3],j);
+                }
+            }
+        }
+        console.log(fd); debugger
+        return fd;
+    }
+    function updateCoursesListInStudents() {
+
     }
 });
