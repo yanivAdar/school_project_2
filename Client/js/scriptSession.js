@@ -5,6 +5,7 @@ $(document).ready(function () {
     var studentCrsArr = [];
     loadDataStd();
     loadDataCrs();
+    var gId;
     $('#mainSudentInfo').hide();
     $('#mainSudentEdit').hide();
     $('#mainCoursesInfo').hide();
@@ -38,6 +39,7 @@ $(document).ready(function () {
     });
     $(document).on('click', '.crsTR', function (e) {
         id = this.id;
+        gId = id;
         var crsObj = getCoursesFromData(id);
         currentCrs(crsObj);
     })
@@ -107,6 +109,25 @@ $(document).ready(function () {
         var courses = fillCourses();
         newStdDetails(updateUrl, id, name, phone, email, picture, courses);
     });
+    $('#createCrs').on('click', function () {
+        var newStdUrl = '../Server/API/newCourses.php';
+        var name = $('#crsNameEdit').val();
+        var description = $('#crsDescription').val();
+        var picture = $('#crsPicture').attr('src');
+        newCrsDetails(newStdUrl, name, description, picture);
+    });
+    // $('#updateCrs').on('click', function () {
+    //     $('#updateStd').show();
+    //     $('#createStd').hide();
+    //     var updateUrl = '../Server/API/updateStudent.php';
+    //     var id = $('#stdEmail').html();
+    //     var name = $('#Name').val();
+    //     var phone = $('#Phone').val();
+    //     var email = $('#Email').val();
+    //     var picture = $('#Picture').attr('src');
+    //     var courses = fillCourses();
+    //     newStdDetails(updateUrl, id, name, phone, email, picture, courses);
+    // });
     $('#deleteStd').click(function () {
         alert('you are about to delete this student');
         var doOrDont = confirm('are you sure you want to delete the student?');
@@ -125,6 +146,28 @@ $(document).ready(function () {
                 },
                 data: {
                     id: id
+                }
+            });
+        }
+    });
+    $('#deleteCrs').click(function () {
+        alert('you are about to delete this course');
+        var doOrDont = confirm('are you sure you want to delete the course?');
+        if (doOrDont) {
+            var numberId = Number(id.replace( /^\D+/g, ''));
+            $.ajax({
+                url: '../Server/API/deleteCrs.php',
+                type: 'POST',
+                success: function (data) {
+                    $('.remove').remove();
+                    loadDataStd();
+                    loadDataCrs();
+                },
+                error: function (err) {
+                    console.log(err.responseText);
+                },
+                data: {
+                    id: numberId
                 }
             });
         }
@@ -190,7 +233,7 @@ $(document).ready(function () {
             }
         });
     }
-    function newCrsDetails(url, name, Des, picture, students) {
+    function newCrsDetails(url, name, des, picture, students) {
         $.ajax({
             url: url,
             type: 'POST',
@@ -199,7 +242,7 @@ $(document).ready(function () {
                 loadDataCrs();
                 loadDataStd();
                 setTimeout(function () {
-                    var crs = getStudentFromData(id);
+                    var crs = getCoursesFromData('crs.'+data);
                     currentCrs(crs);
                 }, 50);
             },
@@ -209,8 +252,8 @@ $(document).ready(function () {
             data: {
                 name: name,
                 des: des,
-                picture: picture,
-                students: students
+                // picture: picture,
+                // students: students
             }
         });
     }

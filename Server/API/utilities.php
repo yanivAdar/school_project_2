@@ -76,10 +76,21 @@
     function deleteStd($id){
         $query = "DELETE FROM students WHERE std_email='$id'";
         $resquery = mysqli_query($GLOBALS['connection'], $query);
-        // echo 'ok';
+    }
+    function deleteCrs($id){
+        $query = "DELETE FROM courses WHERE id='$id'";
+        $resquery = mysqli_query($GLOBALS['connection'], $query);
     }
     function createStudent($name,$phone,$email,$picture,$courses){
         $query = "INSERT INTO students (std_full_name, std_phone, std_email, std_picture, std_courses) VALUES ('$name','$phone','$email','$picture','$courses')";
         $resQuery = mysqli_query($GLOBALS['connection'], $query);
+    }
+    function createCourse($name,$des){
+        $query = "INSERT INTO courses (course_name, course_description) VALUES ('$name','$des')";
+        $resQuery = mysqli_query($GLOBALS['connection'], $query);
+        $query2 = "SELECT id FROM courses WHERE course_name='$name'";
+        $resQuery2 = mysqli_query($GLOBALS['connection'], $query2);
+        $courseId = mysqli_fetch_row($resQuery2);
+        return $courseId;
     }
 ?>
