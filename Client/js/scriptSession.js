@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    // -----------------------------------GLOBAL AJAX AND FUNCTIONS --------------------------
     var stdData;
     var crsData;
     var coursesArr = [];
@@ -37,39 +38,6 @@ $(document).ready(function () {
             console.log(err.responseText);
         }
     });
-    $(document).on('click', '.crsTR', function (e) {
-        id = this.id;
-        gId = id;
-        var crsObj = getCoursesFromData(id);
-        currentCrs(crsObj);
-    })
-    $(document).on('click', '.stdTR', function (e) {
-        var id = $($(e.target).parent()).parent()[0].id;
-        var std_id = getStudentFromData(id);
-        currentStd(std_id);
-    });
-    $('#editStd').on('click', function () {
-        $('#mainSudentInfo').hide();
-        $('#updateStd').show();
-        $('#createStd').hide();
-        $('#myUploadfile').val('');
-        var id = $('#stdEmail').html();
-        var std_id = getStudentFromData(id);
-        getStudentInfoIntoForm(std_id);
-    });
-    $('#editCrs').on('click', function () {
-        $('#mainCoursesInfo').hide();
-        $('#updateCrs').show();
-        $('#createCrs').hide();
-        var crsObj = getCoursesFromData(id);
-        getCoursesInfoIntoForm(crsObj);
-    });
-    $('#myStdUpload').on('click', function () {
-        uploadImage('myUploadStdfile', 'Picture', '../../client/project-pics/profile-pictures/', 'project-pics/profile-pictures/');
-    });
-    $('#myCrsUpload').on('click', function () {
-        uploadImage('myUploadCoursefile', 'crsPicture', '../../client/project-pics/courses-pictures/', 'project-pics/courses-pictures/');
-    });
     function uploadImage(idOfBtn, idOfPic, locationClient, picFolder) {
         var file_data = $('#' + idOfBtn).prop('files')[0];
         var form_data = new FormData();
@@ -92,6 +60,21 @@ $(document).ready(function () {
             }
         });
     }
+    // ----------------------------------- STUDENTS FUNCTIONS ----------------------------------
+    $(document).on('click', '.stdTR', function (e) {
+        var id = $($(e.target).parent()).parent()[0].id;
+        var std_id = getStudentFromData(id);
+        currentStd(std_id);
+    });
+    $('#editStd').on('click', function () {
+        $('#mainSudentInfo').hide();
+        $('#updateStd').show();
+        $('#createStd').hide();
+        $('#myUploadfile').val('');
+        var id = $('#stdEmail').html();
+        var std_id = getStudentFromData(id);
+        getStudentInfoIntoForm(std_id);
+    });
     $('#stdAdd').on('click', function () {
         $('#createStd').show();
         $('#mainCoursesInfo').hide();
@@ -106,16 +89,6 @@ $(document).ready(function () {
         for (let a of checkboxVal) {
             a['checked'] = false;
         }
-    });
-    $('#crsAdd').on('click', function () {
-        $('#createCrs').show();
-        $('#mainSudentEdit').hide();
-        $('#mainSudentInfo').hide();
-        $('#mainCoursesInfo').hide();
-        $('#updateCrs').hide();
-        $('#mainCourseEdit').effect('slide', 'fast');
-        $('.clean').val('');
-        $('#Picture').attr('src', '');
     });
     $('#createStd').on('click', function () {
         var newStdUrl = '../Server/API/newStudent.php';
@@ -139,26 +112,8 @@ $(document).ready(function () {
         var courses = fillCourses();
         newStdDetails(updateUrl, id, name, phone, email, picture, courses);
     });
-    $('#createCrs').on('click', function () {
-        var newStdUrl = '../Server/API/newCourses.php';
-        var name = $('#crsNameEdit').val();
-        var description = $('#crsDescription').val();
-        var picture = $('#crsPicture').attr('src');
-        var id = '';
-        var students = '';
-        newCrsDetails(newStdUrl, id, name, description, picture, students);
-
-    });
-    $('#updateCrs').on('click', function () {
-        $('#updateStd').show();
-        $('#createStd').hide();
-        var updateUrl = '../Server/API/updateCourses.php';
-        var name = $('#crsNameEdit').val();
-        var description = $('#crsDescription').val();
-        var picture = $('#crsPicture').attr('src');
-        var students = updateStudentListInCourses(name);
-        var numberId = Number(id.replace(/^\D+/g, ''));
-        newCrsDetails(updateUrl, numberId, name, description, picture, students);
+    $('#myStdUpload').on('click', function () {
+        uploadImage('myUploadStdfile', 'Picture', '../../client/project-pics/profile-pictures/', 'project-pics/profile-pictures/');
     });
     $('#deleteStd').click(function () {
         alert('you are about to delete this student');
@@ -181,6 +136,136 @@ $(document).ready(function () {
                 }
             });
         }
+    });
+    function newStdDetails(url, id, name, phone, email, picture, courses) {
+        $.ajax({
+            url: url,
+            type: 'POST',
+            success: function (data) {
+                $('.remove').remove();
+                loadDataStd();
+                loadDataCrs();
+                setTimeout(function () {
+                    var std = getStudentFromData(email);
+                    currentStd(std);
+                }, 50);
+            },
+            error: function (err) {
+                console.log(err.responseText);
+            },
+            data: {
+                id: id,
+                name: name,
+                phone: phone,
+                email: email,
+                picture: picture,
+                courses: courses
+            }
+        });
+    }
+    function loadDataStd() {
+        $.ajax({
+            url: '../Server/API/students.php',
+            type: 'POST',
+            success: function (data) {
+                stdData = data;
+                for (let i of data) {
+                    $('#Stable').append('<tr class="stdTR remove" id="' + i[3] + '"><td class="info"><img class="proPic" src="' + i[4] + '"/></td><td><p class="info">' + i[1] + '</p><p class="info">' + i[2] + '</p></td></tr>');
+                    var courses = (i[5]);
+                    coursesArr.push(courses);
+                }
+            },
+            error: function (err) {
+                console.log(err.responseText);
+            }
+        });
+    }
+    function getStudentFromData(id) {
+        for (var i = 0; i < stdData.length; i++) {
+            if (stdData[i][3] == id) {
+                return stdData[i];
+            }
+        }
+    }
+    function currentStd(object) {
+        $('#mainCoursesInfo').hide();
+        $('#mainCourseEdit').hide();
+        $('#mainSudentEdit').hide();
+        $('#mainSudentInfo').effect('slide', 'fast');
+        $('#stdName').html(object[1]);
+        $('#stdPhone').html(object[2]);
+        $('#stdEmail').html(object[3]);
+        $('.stdPic').attr('src', (object[4]));
+        $('#stdCourses').html('');
+        var stdCourses = object[5].split(",");
+        for (let j of stdCourses) {
+            $('#stdCourses').append('<li>' + j + '</li>');
+        }
+    }
+    function getStudentInfoIntoForm(object) {
+        $('#mainSudentEdit').effect('slide', 'fast');
+        $('#Name').val(object[1]);
+        $('#Phone').val(object[2]);
+        $('#Email').val(object[3]);
+        $('#Picture').attr('src', (object[4]));
+        var stdCourses = object[5].split(",");
+        for (let a of $('input:checkbox')) {
+            a['checked'] = false;
+        }
+        for (let i of $('input:checkbox'))
+            for (let j of stdCourses) {
+                if (i['value'] == j) {
+                    i['checked'] = 'true';
+                }
+            }
+    }
+    // ----------------------------------- COURSES FUNCTIONS ----------------------------------
+    $(document).on('click', '.crsTR', function (e) {
+        id = this.id;
+        gId = id;
+        var crsObj = getCoursesFromData(id);
+        currentCrs(crsObj);
+    });
+    $('#editCrs').on('click', function () {
+        $('#mainCoursesInfo').hide();
+        $('#updateCrs').show();
+        $('#createCrs').hide();
+        var crsObj = getCoursesFromData(id);
+        getCoursesInfoIntoForm(crsObj);
+    });
+    $('#myCrsUpload').on('click', function () {
+        uploadImage('myUploadCoursefile', 'crsPicture', '../../client/project-pics/courses-pictures/', 'project-pics/courses-pictures/');
+    });
+    $('#crsAdd').on('click', function () {
+        $('#createCrs').show();
+        $('#mainSudentEdit').hide();
+        $('#mainSudentInfo').hide();
+        $('#mainCoursesInfo').hide();
+        $('#updateCrs').hide();
+        $('#mainCourseEdit').effect('slide', 'fast');
+        $('.clean').val('');
+        $('#Picture').attr('src', '');
+    });
+    $('#createCrs').on('click', function () {
+        var newStdUrl = '../Server/API/newCourses.php';
+        var name = $('#crsNameEdit').val();
+        var description = $('#crsDescription').val();
+        var picture = $('#crsPicture').attr('src');
+        var id = '';
+        var students = '';
+        newCrsDetails(newStdUrl, id, name, description, picture, students);
+
+    });
+    $('#updateCrs').on('click', function () {
+        $('#updateStd').show();
+        $('#createStd').hide();
+        var updateUrl = '../Server/API/updateCourses.php';
+        var name = $('#crsNameEdit').val();
+        var description = $('#crsDescription').val();
+        var picture = $('#crsPicture').attr('src');
+        var students = updateStudentListInCourses(name);
+        var numberId = Number(id.replace(/^\D+/g, ''));
+        newCrsDetails(updateUrl, numberId, name, description, picture, students);
     });
     $('#deleteCrs').click(function () {
         alert('you are about to delete this course');
@@ -209,23 +294,7 @@ $(document).ready(function () {
             });
         }
     });
-    function loadDataStd() {
-        $.ajax({
-            url: '../Server/API/students.php',
-            type: 'POST',
-            success: function (data) {
-                stdData = data;
-                for (let i of data) {
-                    $('#Stable').append('<tr class="stdTR remove" id="' + i[3] + '"><td class="info"><img class="proPic" src="' + i[4] + '"/></td><td><p class="info">' + i[1] + '</p><p class="info">' + i[2] + '</p></td></tr>');
-                    var courses = (i[5]);
-                    coursesArr.push(courses);
-                }
-            },
-            error: function (err) {
-                console.log(err.responseText);
-            }
-        });
-    }
+
     function loadDataCrs() {
         $.ajax({
             url: '../Server/API/courses.php',
@@ -245,32 +314,6 @@ $(document).ready(function () {
             },
             error: function (err) {
                 console.log(err.responseText);
-            }
-        });
-    }
-    function newStdDetails(url, id, name, phone, email, picture, courses) {
-        $.ajax({
-            url: url,
-            type: 'POST',
-            success: function (data) {
-                $('.remove').remove();
-                loadDataStd();
-                loadDataCrs();
-                setTimeout(function () {
-                    var std = getStudentFromData(email);
-                    currentStd(std);
-                }, 50);
-            },
-            error: function (err) {
-                console.log(err.responseText);
-            },
-            data: {
-                id: id,
-                name: name,
-                phone: phone,
-                email: email,
-                picture: picture,
-                courses: courses
             }
         });
     }
@@ -300,33 +343,11 @@ $(document).ready(function () {
             }
         });
     }
-    function getStudentFromData(id) {
-        for (var i = 0; i < stdData.length; i++) {
-            if (stdData[i][3] == id) {
-                return stdData[i];
-            }
-        }
-    }
     function getCoursesFromData(id) {
         for (var i = 0; i < crsData.length; i++) {
             if ('crs.' + crsData[i][0] == id) {
                 return crsData[i];
             }
-        }
-    }
-    function currentStd(object) {
-        $('#mainCoursesInfo').hide();
-        $('#mainCourseEdit').hide();
-        $('#mainSudentEdit').hide();
-        $('#mainSudentInfo').effect('slide', 'fast');
-        $('#stdName').html(object[1]);
-        $('#stdPhone').html(object[2]);
-        $('#stdEmail').html(object[3]);
-        $('.stdPic').attr('src', (object[4]));
-        $('#stdCourses').html('');
-        var stdCourses = object[5].split(",");
-        for (let j of stdCourses) {
-            $('#stdCourses').append('<li>' + j + '</li>');
         }
     }
     function currentCrs(object) {
@@ -347,23 +368,7 @@ $(document).ready(function () {
             }
         }
     }
-    function getStudentInfoIntoForm(object) {
-        $('#mainSudentEdit').effect('slide', 'fast');
-        $('#Name').val(object[1]);
-        $('#Phone').val(object[2]);
-        $('#Email').val(object[3]);
-        $('#Picture').attr('src', (object[4]));
-        var stdCourses = object[5].split(",");
-        for (let a of $('input:checkbox')) {
-            a['checked'] = false;
-        }
-        for (let i of $('input:checkbox'))
-            for (let j of stdCourses) {
-                if (i['value'] == j) {
-                    i['checked'] = 'true';
-                }
-            }
-    }
+
     function getCoursesInfoIntoForm(object) {
         $('#mainCourseEdit').effect('slide', 'fast');
         $('#crsNameEdit').val(object[1]);
