@@ -152,11 +152,13 @@ $(document).ready(function () {
     $('#updateCrs').on('click', function () {
         $('#updateStd').show();
         $('#createStd').hide();
-        var updateUrl = '../Server/API/updateStudent.php';
-        var name = $('#Name').val();
-        var picture = $('#Picture').attr('src');
+        var updateUrl = '../Server/API/updateCourses.php';
+        var name = $('#crsNameEdit').val();
+        var description = $('#crsDescription').val();
+        var picture = $('#crsPicture').attr('src');
         var students = updateStudentListInCourses(name);
-        newCrsDetails(newStdUrl, name, description, picture, students);
+        var numberId = Number(id.replace(/^\D+/g, ''));
+        newCrsDetails(updateUrl, numberId, name, description, picture, students);
     });
     $('#deleteStd').click(function () {
         alert('you are about to delete this student');

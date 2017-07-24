@@ -73,6 +73,14 @@
         $student = mysqli_fetch_row($resquery2);
         return $student;
     }
+    function updateCrs($id,$name,$des,$picture){
+        $query = "UPDATE courses SET course_name='$name',course_description='$des',course_img='$picture' WHERE id='$id'";
+        $resQuery = mysqli_query($GLOBALS['connection'], $query);
+        $query2 = "SELECT id FROM courses WHERE id='$id'";
+        $resQuery2 = mysqli_query($GLOBALS['connection'], $query2);
+        $courseId = mysqli_fetch_row($resQuery2);
+        return $courseId;
+    }
     function deleteStd($id){
         $query = "DELETE FROM students WHERE std_email='$id'";
         $resquery = mysqli_query($GLOBALS['connection'], $query);
