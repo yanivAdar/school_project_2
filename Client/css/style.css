@@ -12,22 +12,13 @@
 .myBtn{
     width: 70px;
     height: 35px;
-    /*background-color: teal;*/
-    /*background-color: linear-gradient(red, yellow, green);*/
     background-color: #be9d34;
     border: none;
     color: white;
-    /*border-radius: 10px;*/
 }
 .user{
     float: left;
 }
-/*.myPic{
-    float: left;
-    width: 35px;
-    height: 35px;
-    margin: 5px;
-}*/
 .menu{
     float:left;
     height: 50px;
@@ -67,7 +58,7 @@ td{
     height: 150px;
     float: left;
     margin: 0px 20px 20px 20px;
-    background-color: grey;
+    background-color: whitesmoke;
     display: inline-block;
     border: 1px solid black;
 }
@@ -94,7 +85,7 @@ td{
 .proPic{
     width: 45px;
     height: 45px;
-    background-color: lightgray;
+    background-color: whitesmoke;
 }
 
 .stdTR{

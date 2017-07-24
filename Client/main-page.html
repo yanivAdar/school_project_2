@@ -122,8 +122,8 @@
             </tr>
             <tr>
 
-                <td><label for="file">Upload Picture</label></td>
-                <td><input id="file" type="file" name="myFile" /></br>
+                <td><input type="button" id="myCrsUpload" value="Upload Picture" class="btn"/td>
+                <td><input id="myUploadCoursefile" type="file" name="myFile"/></br>
                 </td>
             </tr>
         </table>
@@ -158,8 +158,8 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td><label for="file">Upload Picture</label></td>
-                <td><input id="file" type="file" name="myFile" /></br>
+                <td><input type="button" id="myStdUpload" value="Upload Picture" class="btn"/td>
+                <td><input id="myUploadStdfile" type="file" name="myFile"/></br>
                 </td>
             </tr>
             <tr>
@@ -167,9 +167,12 @@
                 </td>
             </tr>
         </table>
-        <table class="editTable">
+        <table class="editTable" id="myCoursesList">
             <tr>
                 <td><label>Courses</label></td>
+            </tr>
+            <!--<tr>
+                <td></td>
                 <td>
                     <span class="mySpan checkbox">
                     <label><input type="checkbox" value="Html">Html</label>
@@ -211,7 +214,7 @@
                     <label><input type="checkbox" value="JavaScript">JavaScript</label>
                     </span>
                 </td>
-            </tr>
+            </tr>-->
         </table>
     </div>
 

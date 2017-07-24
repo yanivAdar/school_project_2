@@ -81,11 +81,6 @@
         $query = "DELETE FROM courses WHERE id='$id'";
         $resquery = mysqli_query($GLOBALS['connection'], $query);
     }
-    function deleteCrsInStudents($crs){
-        $query = "UPDATE students SET std_courses = REPLACE(std_courses, ',$crs', '') WHERE std_courses like '%,$crs%'";
-        $resQuery = mysqli_query($GLOBALS['connection'], $query);
-
-    }
     function createStudent($name,$phone,$email,$picture,$courses){
         $query = "INSERT INTO students (std_full_name, std_phone, std_email, std_picture, std_courses) VALUES ('$name','$phone','$email','$picture','$courses')";
         $resQuery = mysqli_query($GLOBALS['connection'], $query);
