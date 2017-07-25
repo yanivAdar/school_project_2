@@ -1,7 +1,7 @@
 <?php
     session_start();
     require 'utilities.php';
-    $resFlag = getStudents();
+    $res = getAdmins();
     header('content-Type: application/json');
-    echo json_encode($resFlag);
+    echo json_encode($res);
 ?>

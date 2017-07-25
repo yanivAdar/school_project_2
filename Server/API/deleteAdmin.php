@@ -3,6 +3,6 @@
   require 'utilities.php';
   if(isset($_POST['id'])){
          $id = $_POST['id'];
-         deleteCrs($id);
+         deleteAdmin($id);
     }
 ?>

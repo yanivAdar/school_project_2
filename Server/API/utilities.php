@@ -35,6 +35,21 @@
         $admin = mysqli_fetch_row($resQuery);
         return $admin;
     }
+    function getAdmins(){
+        $query = "SELECT * FROM admins";
+        $resQuery = mysqli_query($GLOBALS['connection'], $query);
+        $admins = mysqli_fetch_row($resQuery);
+        $adminData = [];
+        while($admins){
+            $admin = [];
+            foreach ($admins as $key => $value) {
+                array_push($admin,$value);
+            }
+            array_push($adminData,$admin);
+            $admins = mysqli_fetch_row($resQuery);
+        }
+        return $adminData;
+    }
     function getStudents(){
         $query = "SELECT * FROM students";
         $resQuery = mysqli_query($GLOBALS['connection'], $query);
@@ -81,12 +96,27 @@
         $courseId = mysqli_fetch_row($resQuery2);
         return $courseId;
     }
+    function updateAdminId($id,$name,$phone,$email,$picture,$role){
+        $query = "UPDATE admins SET full_name='$name',admin_role='$role',admin_phone='$phone',admin_email='$email',admin_pic='$picture' WHERE id='$id'";
+        $resQuery = mysqli_query($GLOBALS['connection'], $query);
+        $query2 = "SELECT id FROM admins WHERE id='$id'";
+        $resQuery2 = mysqli_query($GLOBALS['connection'], $query2);
+        $adminId = mysqli_fetch_row($resQuery2);
+        return $adminId;
+    }
+    function updateAdminPass($id,$pass){
+        $query = "UPDATE admins SET admin_pass='$pass' WHERE id='$id'";
+    }
     function deleteStd($id){
         $query = "DELETE FROM students WHERE std_email='$id'";
         $resquery = mysqli_query($GLOBALS['connection'], $query);
     }
     function deleteCrs($id){
         $query = "DELETE FROM courses WHERE id='$id'";
+        $resquery = mysqli_query($GLOBALS['connection'], $query);
+    }
+    function deleteAdmin($id){
+        $query = "DELETE FROM admins WHERE id='$id'";
         $resquery = mysqli_query($GLOBALS['connection'], $query);
     }
     function deleteCrsInStudents($crs){
@@ -105,5 +135,13 @@
         $resQuery2 = mysqli_query($GLOBALS['connection'], $query2);
         $courseId = mysqli_fetch_row($resQuery2);
         return $courseId;
+    }
+    function createAdmin($name,$phone,$email,$picture,$role,$pass){
+        $query = "INSERT INTO admins (full_name, admin_role, admin_phone, admin_email, admin_pic, admin_pass) VALUES ('$name','$role','$phone','$email','$picture','$pass')";
+        $resQuery = mysqli_query($GLOBALS['connection'], $query);
+        $query2 = "SELECT id FROM admins WHERE admin_email='$email'";
+        $resQuery2 = mysqli_query($GLOBALS['connection'], $query2);
+        $adminId = mysqli_fetch_row($resQuery2);
+        return $adminId;
     }
 ?>

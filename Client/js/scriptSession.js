@@ -2,15 +2,28 @@ $(document).ready(function () {
     // -----------------------------------GLOBAL AJAX AND FUNCTIONS --------------------------
     var stdData;
     var crsData;
+    var adminData;
     var coursesArr = [];
     var studentCrsArr = [];
     loadDataStd();
     loadDataCrs();
+    loadDataAdmin();
     var gId;
     $('#mainSudentInfo').hide();
     $('#mainSudentEdit').hide();
     $('#mainCoursesInfo').hide();
     $('#mainCourseEdit').hide();
+    $('#mainAdminsInfo').hide();
+    $('#mainAdminsEdit').hide();
+    $('#mainAdminsList').hide();
+    $('#schoolBtn').on('click', function () {
+        $('#mainAdminsInfo').hide();
+        $('#mainAdminsEdit').hide();
+        $('#mainAdminsList').hide();
+        $('#mainCoursesList').show();
+        $('#mainStudentsList').show();
+    });
+
     $.ajax({
         url: '../Server/API/login.php',
         success: function (data) {
@@ -28,6 +41,7 @@ $(document).ready(function () {
         success: function (data) {
             $('#name').html(data[1]);
             $('#role').html(data[2]);
+            $('#adminImg').attr('src', data[5]);
 
             console.log(data);
             if (data[2] == 'Sales') {
@@ -38,6 +52,7 @@ $(document).ready(function () {
             console.log(err.responseText);
         }
     });
+
     function uploadImage(idOfBtn, idOfPic, locationClient, picFolder) {
         var file_data = $('#' + idOfBtn).prop('files')[0];
         var form_data = new FormData();
@@ -59,6 +74,157 @@ $(document).ready(function () {
                 console.log(err.responseText);
             }
         });
+    }
+    // ----------------------------------- ADMINS FUNCTIONS ----------------------------------
+    $(document).on('click', '.adminTR', function () {
+        id = this.id;
+        var adminObj = getAdminFromData(id);
+        currentAdmin(adminObj);
+    });
+    $('#adminBtn').on('click', function () {
+        $('#mainSudentInfo').hide();
+        $('#mainSudentEdit').hide();
+        $('#mainCoursesInfo').hide();
+        $('#mainCourseEdit').hide();
+        $('#mainCoursesList').hide();
+        $('#mainStudentsList').hide();
+        $('#mainAdminsInfo').effect('slide', 'fast');
+        $('#mainAdminsList').show();
+    });
+    $('#editAdmin').on('click', function () {
+        $('#mainAdminsInfo').hide();
+        $('#updateAdmin').show();
+        $('#createAdmin').hide();
+        var adminObj = getAdminFromData(id);
+        getAdminInfoIntoForm(adminObj);
+    });
+    $('#updateAdmin').on('click', function () {
+        var updateAdminUrl = '../Server/API/updateAdmin.php';
+        var idNum = Number(id.replace(/^\D+/g, ''));
+        var name = $('#adminEditName').val();
+        var phone = $('#adminEditPhone').val();
+        var email = $('#adminEditEmail').val();
+        var picture = $('#adminEditPicture').attr('src');
+        var role = $('#adminEditRole').val();
+        var pass = $('#adminPass').val();
+        var conPass = $('#adminConPass').val();
+        newAdminDetails(updateAdminUrl, idNum, name, phone, email, picture, role, pass, conPass);
+    });
+    $('#adminAdd').on('click', function () {
+        $('#mainAdminsInfo').hide();
+        $('#mainAdminsEdit').effect('slide', 'fast');
+        $('#createAdmin').show();
+        $('#updateAdmin').hide();
+        $('#myUploadAdminfile').val('');
+        $('.clean').val('');
+        $('#adminEditPicture').attr('src', '');
+    });
+    $('#createAdmin').on('click', function () {
+        var newAdminUrl = '../Server/API/newAdmin.php';
+        var id = id;
+        var name = $('#adminEditName').val();
+        var phone = $('#adminEditPhone').val();
+        var email = $('#adminEditEmail').val();
+        var picture = $('#adminEditPicture').attr('src');
+        var role = $('#adminEditRole').val();
+        var pass = $('#adminPass').val();
+        var conPass = $('#adminConPass').val();
+        newAdminDetails(newAdminUrl, id, name, phone, email, picture, role, pass, conPass);
+    });
+    $('#myAdminUpload').on('click', function () {
+        uploadImage('myUploadAdminfile', 'adminEditPicture', '../../client/project-pics/profile-pictures/', 'project-pics/profile-pictures/');
+    });
+    $('#deleteAdmin').click(function () {
+        alert('you are about to delete this admin');
+        var doOrDont = confirm('are you sure you want to delete the admin?');
+        if (doOrDont) {
+            var idNum = Number(id.replace(/^\D+/g, ''));
+        }
+        $.ajax({
+            url: '../Server/API/deleteAdmin.php',
+            type: 'POST',
+            success: function (data) {
+                $('.remove').remove();
+                loadDataAdmin();
+            },
+            error: function (err) {
+                console.log(err.responseText);
+            },
+            data: {
+                id: idNum
+            }
+        });
+    });
+    function loadDataAdmin() {
+        $.ajax({
+            url: '../Server/API/admins.php',
+            type: 'POST',
+            success: function (data) {
+                adminData = data;
+                for (let i of data) {
+                    $('#Atable').append('<tr class="adminTR remove" id="admin.' + i[0] + '"><td class="info"><img class="proPic" src="' + i[5] + '"/></td><td><p class="info">' + i[1] + ', ' + i[2] + '</p><p class="info">' + i[3] + '</p><p class="info">' + i[4] + '</p></td></tr>');
+                }
+            },
+            error: function (err) {
+                console.log(err.responseText);
+            }
+        });
+    }
+    function newAdminDetails(url, id, name, phone, email, picture, role, pass, conPass) {
+        $.ajax({
+            url: url,
+            type: 'POST',
+            success: function (data) {
+                $('.remove').remove();
+                loadDataAdmin();
+                setTimeout(function () {
+                    var adminObj = getAdminFromData('admin.' + data);
+                    id = ('admin.' + data);
+                    currentAdmin(adminObj);
+                }, 50);
+            },
+            error: function (err) {
+                console.log(err.responseText);
+            },
+            data: {
+                id: id,
+                name: name,
+                phone: phone,
+                email: email,
+                picture: picture,
+                role: role,
+                pass: pass,
+                conPass: conPass
+            }
+        });
+    }
+    function getAdminFromData(id) {
+        for (var i = 0; i < adminData.length; i++) {
+            if ('admin.' + adminData[i][0] == id) {
+                return adminData[i];
+            }
+        }
+    }
+    function getAdminInfoIntoForm(object) {
+        $('#mainAdminsEdit').effect('slide', 'fast');
+        $('#adminEditName').val(object[1]);
+        $('#adminEditRole').val(object[2]);
+        $('#adminEditPhone').val(object[3]);
+        $('#adminEditEmail').val(object[4]);
+        $('#adminEditPicture').attr('src', (object[5]));
+    }
+    function currentAdmin(object) {
+        $('#mainCoursesInfo').hide();
+        $('#mainCourseEdit').hide();
+        $('#mainSudentEdit').hide();
+        $('#mainSudentInfo').hide();
+        $('#mainAdminsEdit').hide();
+        $('#mainAdminsInfo').effect('slide', 'fast');
+        $('#adminName').html(object[1]);
+        $('#adminRole').html(object[2]);
+        $('#adminPhone').html(object[3]);
+        $('#adminEmail').html(object[4]);
+        $('.adminPic').attr('src', object[5]);
     }
     // ----------------------------------- STUDENTS FUNCTIONS ----------------------------------
     $(document).on('click', '.stdTR', function (e) {
@@ -294,7 +460,6 @@ $(document).ready(function () {
             });
         }
     });
-
     function loadDataCrs() {
         $.ajax({
             url: '../Server/API/courses.php',
@@ -328,7 +493,7 @@ $(document).ready(function () {
                 setTimeout(function () {
                     var crs = getCoursesFromData('crs.' + data);
                     currentCrs(crs);
-                    id = data;
+                    id = ('crs.' + data);
                 }, 50);
             },
             error: function (err) {
