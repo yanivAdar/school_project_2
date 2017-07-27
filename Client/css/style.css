@@ -36,6 +36,11 @@
     margin-bottom: 0px;
     width: 130px;
 }
+.infoCrs{
+     font-size: 13px;
+    margin-bottom: 0px;
+    width: 50px;
+}
 td{
     padding: 5px;
 }
@@ -122,4 +127,9 @@ td{
 }
 .myTable{
     width: 170px;
+}
+.mainPageStyle{
+    float: left;
+    width: 250px;
+    margin: 25px;
 }

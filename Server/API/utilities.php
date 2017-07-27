@@ -106,6 +106,28 @@
     }
     function updateAdminPass($id,$pass){
         $query = "UPDATE admins SET admin_pass='$pass' WHERE id='$id'";
+        $resquery = mysqli_query($GLOBALS['connection'], $query);
+    }
+    function  updateCouresStudentsList($crs, $id){
+        $query = "SELECT student_list FROM courses WHERE  course_name = '$crs'";
+        $resquery = mysqli_query($GLOBALS['connection'], $query);
+        $res = mysqli_fetch_row($resquery);
+        $key = (array_search($id, $res));
+        if(!($key !== false)) {  
+            $newRes = implode('',$res).$id.',';
+            $query2 = "UPDATE courses SET student_list = '$newRes' WHERE course_name = '$crs'";
+            $resquery = mysqli_query($GLOBALS['connection'], $query2);
+        }
+    }
+    function removedStudentsFromCourses($crs, $id){
+        $query = "SELECT student_list FROM courses WHERE  course_name = '$crs'";
+        $resquery = mysqli_query($GLOBALS['connection'], $query);
+        $res = mysqli_fetch_row($resquery);
+        $key = array_search($id, $res);
+        echo gettype($key);
+        if(!$key) {
+            unset($res[$key]);
+        }
     }
     function deleteStd($id){
         $query = "DELETE FROM students WHERE std_email='$id'";

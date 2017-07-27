@@ -27,7 +27,7 @@
                     <li id="adminBtn"><a href="#">Administraion</a></li>
                 </ul>
                 <ul class="navbar-right">
-                    <img id="adminImg" class="proPic"/>
+                    <img id="adminImg" class="proPic" />
                 </ul>
                 <ul class="navbar-right">
                     <div id="name"></div>
@@ -58,11 +58,42 @@
         <table class="table" id="Stable">
         </table>
     </div>
+    <!-- -------------- main info div -------------- -->
+    <div class="main" id="mainInfo">
+        <nav class="navbar navbar-default" id="myHeader">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <span class="navbar-brand">Main Page</span>
+                </div>
+            </div>
+        </nav>
+        <div class="mainPageStyle">
+            <h3>Students</h3>
+            <span id="numOfStudents"></span>
+        </div>
+        <div class="mainPageStyle">
+            <h3>Courses</h3>
+            <span id="numOfCourses"></span>
+        </div>
+    </div>
+    <!-- -------------- main admin info div -------------- -->
+    <div class="main" id="mainAdminInfo">
+        <nav class="navbar navbar-default" id="myHeader">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <span class="navbar-brand">Main Administraion Page</span>
+                </div>
+            </div>
+        </nav>
+        <div class="mainPageStyle">
+            <h3>Administrators</h3>
+            <span id="numOfAdmins"></span>
+        </div>
+    </div>
     <!-- -------------- courses info div -------------- -->
     <div class="main" id="mainCoursesInfo">
         <nav class="navbar navbar-default" id="myHeader">
             <button class="changeBtn btn" id="editCrs">Edit</button>
-            <button class="changeBtn btn" id="deleteCrs">Delete</button>
             <div class="container-fluid">
                 <div class="navbar-header">
                     <span class="navbar-brand">Courses</span>
@@ -87,6 +118,7 @@
         <nav class="navbar navbar-default" id="myHeader">
             <button class="changeBtn btn" id="updateCrs">Update</button>
             <button class="changeBtn btn" id="createCrs">Create Course</button>
+            <button class="changeBtn btn" id="deleteCrs">Delete</button>
             <div class="container-fluid">
                 <div class="navbar-header">
                     <span class="navbar-brand">Add/edit Courses</span>
@@ -106,9 +138,9 @@
             </tr>
             <tr>
 
-                <td><input type="button" id="myCrsUpload" value="Upload Picture" class="btn"/td>
-                <td><input id="myUploadCoursefile" type="file" name="myFile"/></br>
-                </td>
+                <td><input type="button" id="myCrsUpload" value="Upload Picture" class="btn" /td>
+                    <td><input id="myUploadCoursefile" type="file" name="myFile" /></br>
+                    </td>
             </tr>
         </table>
     </div>
@@ -116,7 +148,6 @@
     <div class="main" id="mainSudentInfo">
         <nav class="navbar navbar-default" id="myHeader">
             <button class="changeBtn btn" id="editStd">Edit</button>
-            <button class="changeBtn btn" id="deleteStd">Delete</button>
             <div class="container-fluid">
                 <div class="navbar-header">
                     <span class="navbar-brand">Students</span>
@@ -126,6 +157,7 @@
         <div><img class="stdPic" /></div>
         <div id="stdInfo">
             <div id="stdName"></div>
+            <div id="stdNumEnrolled"></div>
             <div id="stdPhone" class="stdDet">054-6565655</div>
             <div id="stdEmail" class="stdDet">israel@israeli.us</div>
         </div>
@@ -139,6 +171,7 @@
         <nav class="navbar navbar-default" id="myHeader">
             <button class="changeBtn btn" id="updateStd">Update</button>
             <button class="changeBtn btn" id="createStd">Create Student</button>
+            <button class="changeBtn btn" id="deleteStd">Delete</button>
             <div class="container-fluid">
                 <div class="navbar-header">
                     <span class="navbar-brand">Add/edit Students</span>
@@ -164,9 +197,9 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td><input type="button" id="myStdUpload" value="Upload Picture" class="btn"/td>
-                <td><input id="myUploadStdfile" type="file" name="myFile"/></br>
-                </td>
+                <td><input type="button" id="myStdUpload" value="Upload Picture" class="btn" /td>
+                    <td><input id="myUploadStdfile" type="file" name="myFile" /></br>
+                    </td>
             </tr>
             <tr>
                 <td>
@@ -183,7 +216,6 @@
     <div class="main" id="mainAdminsInfo">
         <nav class="navbar navbar-default" id="myHeader">
             <button class="changeBtn btn" id="editAdmin">Edit</button>
-            <button class="changeBtn btn" id="deleteAdmin">Delete</button>
             <div class="container-fluid">
                 <div class="navbar-header">
                     <span class="navbar-brand">Administrators</span>
@@ -203,6 +235,7 @@
         <nav class="navbar navbar-default" id="myHeader">
             <button class="changeBtn btn" id="updateAdmin">Update</button>
             <button class="changeBtn btn" id="createAdmin">Create Admin</button>
+            <button class="changeBtn btn" id="deleteAdmin">Delete</button>
             <div class="container-fluid">
                 <div class="navbar-header">
                     <span class="navbar-brand">Add/edit Admins</span>
@@ -226,10 +259,10 @@
             </tr>
             <tr>
                 <td><label for="adminEditRole">Role</label></td>
-                <td><input type="text" id="adminEditRole" class="form-control clean" val="" /></td>
+                <td><input type="text" id="adminEditRole" class="form-control clean" val=""/></td>
                 <td></td>
-                <td><input type="button" id="myAdminUpload" value="Upload Picture" class="btn"/></td>
-                <td><input id="myUploadAdminfile" type="file" name="myFile"/></br>
+                <td><input type="button" id="myAdminUpload" value="Upload Picture" class="btn" /></td>
+                <td><input id="myUploadAdminfile" type="file" name="myFile" /></br>
             </tr>
             <tr>
                 <td><label for="adminPass">Password</label></td>
@@ -239,7 +272,7 @@
                 <td><label for="adminConPass">Confirm Password</label></td>
                 <td><input type="password" id="adminConPass" class="form-control clean" val="" /></td>
             </tr>
-            
+
         </table>
     </div>
 
