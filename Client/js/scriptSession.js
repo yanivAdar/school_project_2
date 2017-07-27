@@ -561,7 +561,6 @@ $(document).ready(function () {
             success: function (data) {
                 crsData = data;
                 for (let i in data) {
-
                     if (i % 2 == 0) {
                         var j = i;
                         $('#myCoursesList').append('<tr class="remove" id="tr' + j + '"><td></td></tr>');
@@ -615,6 +614,7 @@ $(document).ready(function () {
         }
     }
     function currentCrs(object) {
+        var counter;
         $('#mainInfo').hide();
         $('#mainAdminInfo').hide();
         $('#mainSudentEdit').hide();
@@ -629,10 +629,12 @@ $(document).ready(function () {
         for (let j of stdEnrolled) {
             for (let i of stdData) {
                 if (j == i[3]) {
+                    counter++;
                     $('#stdEnrolled').append('<tr class="removeCrs" id="' + i[3] + '"><td class="infoCrs"><img class="proPic" src="' + i[4] + '"/></td><td><p class="info">' + i[1] + '</p><p class="info">' + i[2] + '</p></td></tr>');
                 }
             }
         }
+        $('#stdNum').html(counter);
     }
 
     function getCoursesInfoIntoForm(object) {

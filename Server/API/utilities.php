@@ -113,7 +113,7 @@
         $resquery = mysqli_query($GLOBALS['connection'], $query);
         $res = mysqli_fetch_row($resquery);
         $key = (array_search($id, $res));
-        if(!($key !== false)) {  
+        if(!($key)) {  
             $newRes = implode('',$res).$id.',';
             $query2 = "UPDATE courses SET student_list = '$newRes' WHERE course_name = '$crs'";
             $resquery = mysqli_query($GLOBALS['connection'], $query2);
