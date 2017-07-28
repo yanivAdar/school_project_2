@@ -89,9 +89,9 @@ $(document).ready(function () {
     function getNumberOf(data, id) {
         $('#' + id).html(data.length);
     }
+    loadDataAdmin();
     loadDataStd();
     loadDataCrs();
-    loadDataAdmin();
     // ----------------------------------- ADMINS FUNCTIONS ----------------------------------
     $(document).on('click', '.adminTR', function () {
         id = this.id;
@@ -461,14 +461,14 @@ $(document).ready(function () {
             crs: crs,
             id: id
         }
-        $.post('../Server/API/updateCoursesInStudents.php', data)//-----------------------------------------
+        $.post('../Server/API/updateCoursesInStudents.php', data)
     }
     function removedStudentsFromCourses(crs, id) {
         var data = {
             crs: crs,
             id: id
         }
-        $.post('../Server/API/removedStudentsFromCourses.php', data)//-----------------------------------------
+        $.post('../Server/API/removedStudentsFromCourses.php', data)
 
     }
     // ----------------------------------- COURSES FUNCTIONS ----------------------------------
@@ -480,6 +480,7 @@ $(document).ready(function () {
     });
     $('#editCrs').on('click', function () {
         $('#mainCoursesInfo').hide();
+        $('#deleteCrs').hide();
         $('#mainInfo').hide();
         $('#updateCrs').show();
         $('#createCrs').hide();
@@ -605,36 +606,35 @@ $(document).ready(function () {
     }
     function getCoursesFromData(id) {
         for (var i = 0; i < crsData.length; i++) {
-            if (crsData[i][4]) {
-                $('#deleteCrs').show();
-            }
             if ('crs.' + crsData[i][0] == id) {
+                if (crsData[i][4] == "") {
+                    $('#deleteCrs').show();
+                }
                 return crsData[i];
             }
         }
     }
     function currentCrs(object) {
-        var counter;
+        var stdEnrolledNum = (object[4].split(',')).length - 1;
         $('#mainInfo').hide();
         $('#mainAdminInfo').hide();
         $('#mainSudentEdit').hide();
         $('#mainCourseEdit').hide();
         $('#mainSudentInfo').hide();
         $('#mainCoursesInfo').effect('slide', 'fast');
-        $('#crsName').html(object[1]);
+        $('#crsName').html('Coures ' + object[1] + ', ' + stdEnrolledNum + ' Students');
         $('#crsDesc').html(object[2]);
         $('.crsPic').attr('src', (object[3]));
+        // $('#stdNum').html(stdEnrolledNum);
         $('.removeCrs').remove();
         var stdEnrolled = updateStudentListInCourses(object[1]);
         for (let j of stdEnrolled) {
             for (let i of stdData) {
                 if (j == i[3]) {
-                    counter++;
                     $('#stdEnrolled').append('<tr class="removeCrs" id="' + i[3] + '"><td class="infoCrs"><img class="proPic" src="' + i[4] + '"/></td><td><p class="info">' + i[1] + '</p><p class="info">' + i[2] + '</p></td></tr>');
                 }
             }
         }
-        $('#stdNum').html(counter);
     }
 
     function getCoursesInfoIntoForm(object) {

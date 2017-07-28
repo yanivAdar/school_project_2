@@ -112,10 +112,10 @@
         $query = "SELECT student_list FROM courses WHERE  course_name = '$crs'";
         $resquery = mysqli_query($GLOBALS['connection'], $query);
         $res = mysqli_fetch_row($resquery);
-        $key = (array_search($id, $res));
-        if(!($key)) {  
-            $newRes = implode('',$res).$id.',';
-            $query2 = "UPDATE courses SET student_list = '$newRes' WHERE course_name = '$crs'";
+        $strRes = (implode('',$res));
+        if(!(strpos($strRes,$id) !== false)) {  
+            $strRes = implode('',$res).$id.',';
+            $query2 = "UPDATE courses SET student_list = '$strRes' WHERE course_name = '$crs'";
             $resquery = mysqli_query($GLOBALS['connection'], $query2);
         }
     }
@@ -123,10 +123,11 @@
         $query = "SELECT student_list FROM courses WHERE  course_name = '$crs'";
         $resquery = mysqli_query($GLOBALS['connection'], $query);
         $res = mysqli_fetch_row($resquery);
-        $key = array_search($id, $res);
-        echo gettype($key);
-        if(!$key) {
-            unset($res[$key]);
+        $strRes = (implode('',$res));
+       if(strpos($strRes,$id) !== false) {  
+            $strRes = str_replace($id.',','',$strRes);
+            $query2 = "UPDATE courses SET student_list = '$strRes' WHERE course_name = '$crs'";
+            $resquery = mysqli_query($GLOBALS['connection'], $query2);
         }
     }
     function deleteStd($id){
