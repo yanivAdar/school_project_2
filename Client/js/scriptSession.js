@@ -29,6 +29,8 @@ $(document).ready(function () {
         $('#mainAdminsList').hide();
         $('#mainCoursesList').show();
         $('#mainStudentsList').show();
+        loadDataStd();
+        loadDataCrs();
     });
 
     $.ajax({
@@ -126,6 +128,11 @@ $(document).ready(function () {
         loadDataStd();
         loadDataCrs();
     }, 100);
+    $body = $("body");
+    $(document).on({
+        ajaxStart: function () { $body.addClass("loading"); },
+        ajaxStop: function () { $body.removeClass("loading"); }
+    });
     // ----------------------------------- ADMINS FUNCTIONS ----------------------------------
     $(document).on('click', '.adminTR', function () {
         id = this.id;
@@ -145,6 +152,7 @@ $(document).ready(function () {
         $('#mainAdminsInfo').hide();
         $('#mainAdminsList').show();
         $('#mainAdminsEdit').hide();
+        loadDataAdmin();
     });
     $('#editAdmin').on('click', function () {
         $('#adminEditEmail').css('background-color', 'white');
@@ -254,6 +262,7 @@ $(document).ready(function () {
         });
     });
     function loadDataAdmin() {
+        $('#Atable').empty();
         $.ajax({
             url: '../Server/API/admins.php',
             type: 'POST',
@@ -473,6 +482,7 @@ $(document).ready(function () {
         });
     }
     function loadDataStd() {
+        $('#Stable').empty();
         $.ajax({
             url: '../Server/API/students.php',
             type: 'POST',
@@ -644,6 +654,7 @@ $(document).ready(function () {
         }
     });
     function loadDataCrs() {
+        $('#Ctable').empty();
         $.ajax({
             url: '../Server/API/courses.php',
             type: 'POST',
@@ -724,14 +735,12 @@ $(document).ready(function () {
             }
         }
     }
-
     function getCoursesInfoIntoForm(object) {
         $('#mainCourseEdit').effect('slide', 'fast');
         $('#crsNameEdit').val(object[1]);
         $('#crsDescription').val(object[2]);
         $('#crsPicture').attr('src', (object[3]));
     }
-
     function updateStudentListInCourses(crs, deleteCrs) {
         if (crs) {
             stdEnrolled = [];
