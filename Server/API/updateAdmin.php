@@ -11,7 +11,7 @@
             $role = $_POST['role'];
             if(isset($_POST['pass']) && isset($_POST['conPass'])){
                 if(!empty($_POST['pass']) && !empty($_POST['conPass'])){
-                    $pass = $_POST['pass'];
+                    $pass = md5($_POST['pass']);
                     updateAdminPass($id,$pass);
                 }
             }

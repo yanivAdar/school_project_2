@@ -1,7 +1,7 @@
 <?php
     require '../DAL/connection.php';
-     function isEmail($email){
-        $query = "SELECT admin_email FROM admins";
+     function isEmail($email,$table,$pos){
+        $query = "SELECT $pos FROM $table";
         $resQuery = mysqli_query($GLOBALS['connection'], $query);
         $userMail = mysqli_fetch_row($resQuery);
         $flag = false;
@@ -21,7 +21,7 @@
         $resQuery = mysqli_query($GLOBALS['connection'], $query);
         $userPass = mysqli_fetch_row($resQuery);
         $flag = false;
-        if($pass === $userPass[0]){
+        if(md5($pass) === $userPass[0]){
             $flag = true;
             return $flag;
         } 

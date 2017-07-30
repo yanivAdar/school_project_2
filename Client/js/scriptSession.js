@@ -89,9 +89,43 @@ $(document).ready(function () {
     function getNumberOf(data, id) {
         $('#' + id).html(data.length);
     }
-    loadDataAdmin();
-    loadDataStd();
-    loadDataCrs();
+    function checkEmail(table, emailPos, obj, vId, xId, errMsgId) {
+        $(obj).css('background-color', 'white');
+        $(errMsgId).html('');
+        var resFlag = true;
+        var isEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(obj.value);
+        $(vId).hide();
+        $(xId).hide();
+        if (isEmail) {
+            var emailCon = {
+                email: obj.value,
+                table: table,
+                pos: emailPos
+            }
+            $.post('../Server/API/checkIfEmail.php', emailCon, function (data) {
+                if (data) {
+                    $(xId).fadeIn('fast');
+                    $(obj).css('background-color', '#faadad');
+                    $(errMsgId).html("*email already exists");
+                    resFlag = false;
+                    return resFlag;
+                } else {
+                    $(vId).fadeIn('fast');
+                }
+            });
+        } else {
+            $(xId).fadeIn('fast');
+            $(obj).css('background-color', '#faadad');
+            $(errMsgId).html("*not a valid email");
+            resFlag = false;
+        }
+        return resFlag;
+    }
+    setTimeout(function () {
+        loadDataAdmin();
+        loadDataStd();
+        loadDataCrs();
+    }, 100);
     // ----------------------------------- ADMINS FUNCTIONS ----------------------------------
     $(document).on('click', '.adminTR', function () {
         id = this.id;
@@ -113,6 +147,12 @@ $(document).ready(function () {
         $('#mainAdminsEdit').hide();
     });
     $('#editAdmin').on('click', function () {
+        $('#adminEditEmail').css('background-color', 'white');
+        $('#errMsg').html('');
+        $('#adminSigns').empty();
+        $('#adminSigns').append('<img id="vSign" class="goodOrBad" src="project-pics/vSign.png" /><img id="xSign" class="goodOrBad" src="project-pics/xSign.png" />');
+        $('#vSign').hide();
+        $('#xSign').hide();
         $('#adminEditRole').removeAttr('disabled');
         $('#deleteAdmin').show();
         if (adminLoged[2] == 'manager') {
@@ -128,8 +168,16 @@ $(document).ready(function () {
         $('#createAdmin').hide();
         var adminObj = getAdminFromData(id);
         getAdminInfoIntoForm(adminObj);
+        $('#adminEditEmail').on('blur', function (e) {
+            if (checkEmail('admins', 'admin_email', this, '#vSign', '#xSign', '#errMsg')) {
+                $('#updateAdmin').removeAttr('disabled');
+            } else {
+                $('#updateAdmin').attr('disabled', 'true');
+            }
+        });
     });
     $('#updateAdmin').on('click', function () {
+
         var updateAdminUrl = '../Server/API/updateAdmin.php';
         var idNum = Number(id.replace(/^\D+/g, ''));
         var name = $('#adminEditName').val();
@@ -142,16 +190,30 @@ $(document).ready(function () {
         newAdminDetails(updateAdminUrl, idNum, name, phone, email, picture, role, pass, conPass);
     });
     $('#adminAdd').on('click', function () {
+        $('#adminEditEmail').css('background-color', 'white');
+        $('#errMsg').html('');
+        $('#adminSigns').empty();
+        $('#adminSigns').append('<img id="vSign" class="goodOrBad" src="project-pics/vSign.png" /><img id="xSign" class="goodOrBad" src="project-pics/xSign.png" />');
+        $('#vSign').hide();
+        $('#xSign').hide();
         $('#mainInfo').hide();
         $('#mainAdminInfo').hide();
         $('#mainAdminsInfo').hide();
         $('#mainAdminsEdit').effect('slide', 'fast');
         $('#createAdmin').show();
+        $('#createAdmin').attr('disabled', 'true');
         $('#updateAdmin').hide();
         $('#deleteAdmin').hide();
         $('#myUploadAdminfile').val('');
         $('.clean').val('');
         $('#adminEditPicture').attr('src', '');
+        $('#adminEditEmail').on('blur', function (e) {
+            if (checkEmail('admins', 'admin_email', this, '#vSign', '#xSign', '#errMsg')) {
+                $('#createAdmin').removeAttr('disabled');
+            } else {
+                $('#createAdmin').attr('disabled', 'true');
+            }
+        });
     });
     $('#createAdmin').on('click', function () {
         var newAdminUrl = '../Server/API/newAdmin.php';
@@ -279,6 +341,12 @@ $(document).ready(function () {
         currentStd(std_id);
     });
     $('#editStd').on('click', function () {
+        $('#Email').css('background-color', 'white');
+        $('#stdErrMsg').html('');
+        $('#studentsSigns').empty();
+        $('#studentsSigns').append('<img id="vSignStd" class="goodOrBad" src="project-pics/vSign.png" /><img id="xSignStd" class="goodOrBad" src="project-pics/xSign.png" />');
+        $('#vSignStd').hide();
+        $('#xSignStd').hide();
         $('#mainSudentInfo').hide();
         $('#mainAdminInfo').hide();
         $('#mainInfo').hide();
@@ -289,8 +357,21 @@ $(document).ready(function () {
         var id = $('#stdEmail').html();
         var std_id = getStudentFromData(id);
         getStudentInfoIntoForm(std_id);
+        $('#Email').on('blur', function (e) {
+            if (checkEmail('students', 'std_email', this, '#vSignStd', '#xSignStd', '#stdErrMsg')) {
+                $('#updateStd').removeAttr('disabled');
+            } else {
+                $('#updateStd').attr('disabled', 'true');
+            }
+        });
     });
     $('#stdAdd').on('click', function () {
+        $('#stdErrMsg').html('');
+        $('#Email').css('background-color', 'white');
+        $('#studentsSigns').empty();
+        $('#studentsSigns').append('<img id="vSignStd" class="goodOrBad" src="project-pics/vSign.png" /><img id="xSignStd" class="goodOrBad" src="project-pics/xSign.png" />');
+        $('#vSignStd').hide();
+        $('#xSignStd').hide();
         $('#mainAdminInfo').hide();
         $('#createStd').show();
         $('#mainInfo').hide();
@@ -307,6 +388,13 @@ $(document).ready(function () {
         for (let a of checkboxVal) {
             a['checked'] = false;
         }
+        $('#Email').on('blur', function (e) {
+            if (checkEmail('students', 'std_email', this, '#vSignStd', '#xSignStd', '#stdErrMsg')) {
+                $('#createStd').removeAttr('disabled');
+            } else {
+                $('#createStd').attr('disabled', 'true');
+            }
+        });
     });
     $('#createStd').on('click', function () {
         var newStdUrl = '../Server/API/newStudent.php';

@@ -104,7 +104,7 @@ td{
 }
 
 .editTable{
-    margin: 20px;
+    margin: 10px;
 }
 #Picture{
     margin-top: 7px;
@@ -135,5 +135,11 @@ td{
 }
 #stdNum{
     float: right;
-
+}
+.goodOrBad{
+    width: 35px;
+    height: 35px;
+    display: inline;
+    float: left;
+    position: relative;
 }

@@ -18,7 +18,8 @@ $(document).ready(function(){
             },
             data:{
                 email:mail,
-                pass:password
+                pass:password,
+                table: 'admins'
             }
         })
     });

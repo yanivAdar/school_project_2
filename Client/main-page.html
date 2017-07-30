@@ -193,10 +193,11 @@
             <tr>
                 <td><label for="Email">Email</label></td>
                 <td><input type="text" id="Email" class="form-control clean" val="" /></td>
+                <td id="studentsSigns"></td>
             </tr>
             <tr>
                 <td></td>
-                <td></td>
+                <td id="stdErrMsg"></td>
                 <td></td>
                 <td><input type="button" id="myStdUpload" value="Upload Picture" class="btn" /td>
                     <td><input id="myUploadStdfile" type="file" name="myFile" /></br>
@@ -257,10 +258,12 @@
             <tr>
                 <td><label for="adminEditEmail">Email</label></td>
                 <td><input type="text" id="adminEditEmail" class="form-control clean" val="" /></td>
+                <td id="adminSigns">
+                </td>
             </tr>
             <tr>
                 <td><label for="adminEditRole">Role</label></td>
-                <td><input type="text" id="adminEditRole" class="form-control clean" val=""/></td>
+                <td><input type="text" id="adminEditRole" class="form-control clean" val="" /></td>
                 <td></td>
                 <td><input type="button" id="myAdminUpload" value="Upload Picture" class="btn" /></td>
                 <td><input id="myUploadAdminfile" type="file" name="myFile" /></br>
@@ -268,6 +271,8 @@
             <tr>
                 <td><label for="adminPass">Password</label></td>
                 <td><input type="password" id="adminPass" class="form-control clean" val="" /></td>
+                <td></td>
+                <td colspan="2" id="errMsg"></td>
             </tr>
             <tr>
                 <td><label for="adminConPass">Confirm Password</label></td>
@@ -276,7 +281,7 @@
 
         </table>
     </div>
-
+<div class="modal"></div>
 </body>
 
 </html>

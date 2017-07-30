@@ -6,12 +6,13 @@
         $resFlag = ture;
     }
 
-    if(isset($_POST['email']) && isset($_POST['pass'])){
+    if(isset($_POST['email']) && isset($_POST['pass']) && isset($_POST['table'])){
         $email = $_POST['email'];
         $pass = $_POST['pass'];
-        // echo $email;
-        if(!empty($email) && !empty($pass)){
-            if(!isEmail($_POST['email'])){
+        $table = $_POST['table'];
+        $pos = 'admin_email';
+        if(!empty($email) && !empty($pass) && !empty($table)){
+            if(!isEmail($email,$table,$pos)){
                 $resFlag = 'email not found';
             }
             else {

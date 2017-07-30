@@ -9,7 +9,7 @@
             $email = $_POST['email'];
             $picture = $_POST['picture'];
             $role = $_POST['role'];
-            $pass = $_POST['pass'];
+            $pass = md5($_POST['pass']);
             $newAdminId = createAdmin($name,$phone,$email,$picture,$role,$pass);
         }
     }
