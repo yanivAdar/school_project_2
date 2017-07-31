@@ -44,7 +44,9 @@
 td{
     padding: 5px;
 }
-
+#smallLogo{
+    padding: 3px;
+}
 .main{
     width: 60%;
     height: 500px;

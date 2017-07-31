@@ -761,5 +761,4 @@ $(document).ready(function () {
             $.post('../Server/API/deleteCourseInStudents.php', data);
         }
     }
-
 });
