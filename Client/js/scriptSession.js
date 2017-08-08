@@ -263,7 +263,7 @@ $(document).ready(function () {
     });
     function loadDataAdmin() {
         $('#Atable').empty();
-        $.ajax({
+        return $.ajax({
             url: '../Server/API/admins.php',
             type: 'POST',
             success: function (data) {
@@ -289,12 +289,15 @@ $(document).ready(function () {
             type: 'POST',
             success: function (data) {
                 $('.remove').remove();
-                loadDataAdmin();
-                setTimeout(function () {
+                // setTimeout(function () {
+                loadDataAdmin().done(function () {
+
                     var adminObj = getAdminFromData('admin.' + data);
                     id = ('admin.' + data);
                     currentAdmin(adminObj);
-                }, 50);
+                    console.log(adminObj, adminData, id);
+                // }, 50);
+                });
             },
             error: function (err) {
                 console.log(err.responseText);
