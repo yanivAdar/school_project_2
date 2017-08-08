@@ -1,0 +1,176 @@
+#login{
+    width: 50%;
+    height: 100px;
+    /*position: center;*/
+
+}
+#crsDescription{
+    resize: none;
+    width: 400px;
+    height: 150px;
+}
+.myBtn{
+    width: 70px;
+    height: 35px;
+    background-color: #be9d34;
+    border: none;
+    color: white;
+}
+.user{
+    float: left;
+}
+.menu{
+    float:left;
+    height: 50px;
+    width: 160px;
+    display: inline-block;
+    font-size: 20px;
+    margin-left: 50px;
+}
+.glyph{
+    margin-left: 30px;
+    cursor: pointer;
+}
+.info{
+    font-size: 13px;
+    margin-bottom: 0px;
+    width: 130px;
+}
+.infoCrs{
+     font-size: 13px;
+    margin-bottom: 0px;
+    width: 50px;
+}
+td{
+    padding: 5px;
+}
+#smallLogo{
+    padding: 3px;
+}
+.main{
+    width: 60%;
+    height: 500px;
+    background-color: floralwhite;
+    float: left;
+    margin-left: 40px;
+    position: relative;
+}
+.changeBtn{
+    float: right;
+    position: relative;
+    margin: 11px 20px;
+}
+.stdPic, .bigPic, .crsPic ,.adminPic{
+    width: 150px;
+    height: 150px;
+    float: left;
+    margin: 0px 20px 20px 20px;
+    background-color: whitesmoke;
+    display: inline-block;
+    border: 1px solid black;
+}
+#stdInfo{
+    width: 70%;
+    height: 150px;
+    float: left;
+    margin: 0px 20px 20px 20px;
+    display: inline-block;
+
+}
+#stdCourses{
+    float: left;
+    width: 70%;
+    font-size: 20px;
+}
+#stdName, #crsName{
+    font-size: 40px;
+}
+.stdDet, #crsDesc{
+    font-size: 18px;
+    padding-right: 20px;
+}
+.proPic{
+    width: 45px;
+    height: 45px;
+    background-color: whitesmoke;
+}
+
+.stdTR{
+    cursor: pointer;
+}
+.crsTR{
+    cursor: pointer;
+}
+.adminTR{
+    cursor: pointer;
+}
+
+.editTable{
+    margin: 10px;
+}
+#Picture{
+    margin-top: 7px;
+}
+.mySpan{
+    width: 120px;
+    float: left;
+    margin-top: 0px;
+    margin-bottom: 0px;   
+}
+#file{
+    margin-top: 16px;
+}
+#stdEnrolled{
+    width: 800px;
+    margin-left: 15px;
+}
+#mainAdminsList{
+    width: 250px;
+}
+.myTable{
+    width: 170px;
+}
+.mainPageStyle{
+    float: left;
+    width: 250px;
+    margin: 25px;
+}
+#stdNum{
+    float: right;
+}
+.goodOrBad{
+    width: 35px;
+    height: 35px;
+    display: inline;
+    float: left;
+    position: relative;
+}
+.modal {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) 
+                /*url('http://i.stack.imgur.com/FhHRx.gif') */
+                url('https://www.mts.am/ResourcePackages/MTSArmenia/assets/images/loading.gif') 
+                50% 50% 
+                no-repeat;
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.loading {
+    overflow: hidden;   
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .modal {
+    display: block;
+}
+/*.hidden2{
+    display: none;
+}*/

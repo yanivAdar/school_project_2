@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>main page</title>
+    <script src="js/jquery-3.2.1.js"></script>
+    <script src="js/scriptSession.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/scriptLogOut.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" href="css/style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- ------------ page nav bar ---------------- -->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="#"><img id="smallLogo" class="navbar-brand" alt="logo" src="project-pics/logo2.png"></a>
+                <a class="navbar-brand" href="#">Yaniv Adar's Project</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li id="schoolBtn"><a href="#">School</a></li>
+                    <li id="adminBtn"><a href="#">Administraion</a></li>
+                </ul>
+                <ul class="navbar-right">
+                    <img id="adminImg" class="proPic" />
+                </ul>
+                <ul class="navbar-right">
+                    <div id="name"></div>
+                    <div id="role"></div>
+                </ul>
+                <ul class="navbar-right">
+                    <div id="logout"><a href="">log out</a></div>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- -------------- page data tables ---------------- -->
+    <!-- -------------- admins data table -------------- -->
+    <div class="menu container-fluid hidden2" id="mainAdminsList">
+        <p>Administraion<span id="adminAdd" class="glyphicon glyphicon-plus glyph"><span></p>
+        <table class="table myTable" id="Atable">
+        </table>
+        </div>
+    <!-- -------------- courses data table -------------- -->
+    <div class="menu container-fluid" id="mainCoursesList">
+        <p>Courses<span id="crsAdd" class="glyphicon glyphicon-plus glyph"><span></p>
+        <table class="table" id="Ctable">
+        </table>
+        </div>
+    <!-- -------------- students data table -------------- -->
+    <div class="menu container-fluid" id="mainStudentsList">
+        <p>Students<span id="stdAdd" class="glyphicon glyphicon-plus glyph"></span></p>
+        <table class="table" id="Stable">
+        </table>
+    </div>
+    <!-- -------------- main info div -------------- -->
+    <div class="main" id="mainInfo">
+        <nav class="navbar navbar-default" id="myHeader">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <span class="navbar-brand">Main Page</span>
+                </div>
+            </div>
+        </nav>
+        <div class="mainPageStyle">
+            <h3>Students</h3>
+            <span id="numOfStudents"></span>
+        </div>
+        <div class="mainPageStyle">
+            <h3>Courses</h3>
+            <span id="numOfCourses"></span>
+        </div>
+    </div>
+    <!-- -------------- main admin info div -------------- -->
+    <div class="main hidden2" id="mainAdminInfo">
+        <nav class="navbar navbar-default" id="myHeader">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <span class="navbar-brand">Main Administraion Page</span>
+                </div>
+            </div>
+        </nav>
+        <div class="mainPageStyle">
+            <h3>Administrators</h3>
+            <span id="numOfAdmins"></span>
+        </div>
+    </div>
+    <!-- -------------- courses info div -------------- -->
+    <div class="main hidden2" id="mainCoursesInfo">
+        <nav class="navbar navbar-default" id="myHeader">
+            <button class="changeBtn btn" id="editCrs">Edit</button>
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <span class="navbar-brand">Courses</span>
+                </div>
+            </div>
+        </nav>
+        <div><img class="crsPic" /></div>
+        <div id="crsInfo">
+            <div id="crsName">Course Name</div>
+            <span id="stdNum"></span>
+            <div id="crsDesc">Description</div>
+        </div>
+        <div>
+            <table id="stdEnrolled">
+                <tr>
+                    <td colspan="2"><label>Students Enrolled</label></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!-- -------------- courses edit div -------------- -->
+    <div class="main hidden2" id="mainCourseEdit">
+        <nav class="navbar navbar-default" id="myHeader">
+            <button class="changeBtn btn" id="updateCrs">Update</button>
+            <button class="changeBtn btn" id="createCrs">Create Course</button>
+            <button class="changeBtn btn" id="deleteCrs">Delete</button>
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <span class="navbar-brand">Add/edit Courses</span>
+                </div>
+            </div>
+        </nav>
+        <table class="editTable">
+            <tr>
+                <td><label for="crsNameEdit">Name</label></td>
+                <td><input type="text" id="crsNameEdit" class="form-control clean" val="" /></td>
+                <td><label for="crsPicture">Picture</label></td>
+                <td rowspan="3" colspan="3"><img class="bigPic clean" id="crsPicture" /></td>
+            </tr>
+            <tr>
+                <td><label for="crsDescription">Course Description</label></td>
+                <td><textarea type="text" id="crsDescription" class="form-control clean" val=""></textarea></td>
+            </tr>
+            <tr>
+
+                <td><input type="button" id="myCrsUpload" value="Upload Picture" class="btn" /td>
+                    <td><input id="myUploadCoursefile" type="file" name="myFile" /></br>
+                    </td>
+            </tr>
+        </table>
+    </div>
+    <!-- -------------- students info div -------------- -->
+    <div class="main hidden2" id="mainSudentInfo">
+        <nav class="navbar navbar-default" id="myHeader">
+            <button class="changeBtn btn" id="editStd">Edit</button>
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <span class="navbar-brand">Students</span>
+                </div>
+            </div>
+        </nav>
+        <div><img class="stdPic" /></div>
+        <div id="stdInfo">
+            <div id="stdName"></div>
+            <div id="stdNumEnrolled"></div>
+            <div id="stdPhone" class="stdDet">054-6565655</div>
+            <div id="stdEmail" class="stdDet">israel@israeli.us</div>
+        </div>
+        <div>
+            <ul id="stdCourses">
+            </ul>
+        </div>
+    </div>
+    <!-- -------------- students edit div -------------- -->
+    <div class="main hidden2" id="mainSudentEdit">
+        <nav class="navbar navbar-default" id="myHeader">
+            <button class="changeBtn btn" id="updateStd">Update</button>
+            <button class="changeBtn btn" id="createStd">Create Student</button>
+            <button class="changeBtn btn" id="deleteStd">Delete</button>
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <span class="navbar-brand">Add/edit Students</span>
+                </div>
+            </div>
+        </nav>
+        <table class="editTable">
+            <tr>
+                <td><label for="Name">Name</label></td>
+                <td><input type="text" id="Name" class="form-control clean" val="" /></td>
+                <td><label for="Picture">Picture</label></td>
+                <td rowspan="3" colspan="3"><img class="bigPic clean" id="Picture" /></td>
+            </tr>
+            <tr>
+                <td><label for="Phone">Phone</label></td>
+                <td><input type="text" id="Phone" class="form-control clean" val="" /></td>
+            </tr>
+            <tr>
+                <td><label for="Email">Email</label></td>
+                <td><input type="text" id="Email" class="form-control clean" val="" /></td>
+                <td id="studentsSigns"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td id="stdErrMsg"></td>
+                <td></td>
+                <td><input type="button" id="myStdUpload" value="Upload Picture" class="btn" /td>
+                    <td><input id="myUploadStdfile" type="file" name="myFile" /></br>
+                    </td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+            </tr>
+        </table>
+        <table class="editTable" id="myCoursesList">
+            <tr>
+                <td><label>Courses</label></td>
+            </tr>
+        </table>
+    </div>
+    <!-- -------------- admins info div -------------- -->
+    <div class="main hidden2" id="mainAdminsInfo">
+        <nav class="navbar navbar-default" id="myHeader">
+            <button class="changeBtn btn" id="editAdmin">Edit</button>
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <span class="navbar-brand">Administrators</span>
+                </div>
+            </div>
+        </nav>
+        <div><img class="adminPic" /></div>
+        <div id="adminInfo">
+            <div id="adminName"></div>
+            <div id="adminPhone" class="adminDet">054-6565655</div>
+            <div id="adminEmail" class="adminDet">israel@israeli.us</div>
+            <div id="adminRole" class="adminDet">role</div>
+        </div>
+    </div>
+    <!-- -------------- admins edit div -------------- -->
+    <div class="main hidden2" id="mainAdminsEdit">
+        <nav class="navbar navbar-default" id="myHeader">
+            <button class="changeBtn btn" id="updateAdmin">Update</button>
+            <button class="changeBtn btn" id="createAdmin">Create Admin</button>
+            <button class="changeBtn btn" id="deleteAdmin">Delete</button>
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <span class="navbar-brand">Add/edit Admins</span>
+                </div>
+            </div>
+        </nav>
+        <table class="editTable">
+            <tr>
+                <td><label for="adminEditName">Name</label></td>
+                <td><input type="text" id="adminEditName" class="form-control clean" val="" /></td>
+                <td><label for="adminEditPicture">Picture</label></td>
+                <td rowspan="3" colspan="3"><img class="bigPic clean" id="adminEditPicture" /></td>
+            </tr>
+            <tr>
+                <td><label for="adminEditPhone">Phone</label></td>
+                <td><input type="text" id="adminEditPhone" class="form-control clean" val="" /></td>
+            </tr>
+            <tr>
+                <td><label for="adminEditEmail">Email</label></td>
+                <td><input type="text" id="adminEditEmail" class="form-control clean" val="" /></td>
+                <td id="adminSigns">
+                </td>
+            </tr>
+            <tr>
+                <td><label for="adminEditRole">Role</label></td>
+                <td><input type="text" id="adminEditRole" class="form-control clean" val="" /></td>
+                <td></td>
+                <td><input type="button" id="myAdminUpload" value="Upload Picture" class="btn" /></td>
+                <td><input id="myUploadAdminfile" type="file" name="myFile" /></br>
+            </tr>
+            <tr>
+                <td><label for="adminPass">Password</label></td>
+                <td><input type="password" id="adminPass" class="form-control clean" val="" /></td>
+                <td></td>
+                <td colspan="2" id="errMsg"></td>
+            </tr>
+            <tr>
+                <td><label for="adminConPass">Confirm Password</label></td>
+                <td><input type="password" id="adminConPass" class="form-control clean" val="" /></td>
+            </tr>
+
+        </table>
+    </div>
+<div class="modal"></div>
+</body>
+
+</html>

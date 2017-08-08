@@ -1,0 +1,36 @@
+<html>
+<head>
+    <title>log-in</title>
+    <script src="js/jquery-3.2.1.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" href="css/style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="top">
+        <div id="logo" class="col-md-4 col-md-offset-4">
+            <img src="project-pics/logo2.jpg" class="center-block"/>
+            <p class="text-center">Yaniv Adar's Project</p>
+        </div>
+    </div>
+    <table id="login" class="table col-md-6 col-md-offset-3">
+        <tr>
+            <td><label for="userM">User E-mail</label></td>
+            <td><input type="text" id="userM" name="userEmail" class="form-control" /></td>
+        </tr>
+        <tr>
+            <td><label for="userP">Password</label></td>
+            <td><input type="password" id="userP" name="password" class="form-control" /></td>
+        </tr>
+        <tr>
+            <td colspan="2" class="text-center"><input id="btn" type="button" name="login" value="log-in" class="myBtn"/></td>
+        </tr>
+        <tr>
+            <td colspan="2" id="infoError" class="text-center"></td>
+        </tr>
+    </table>
+</body>
+
+</html>
